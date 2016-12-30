@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
-	"github.com/shiyanhui/dht"
+	"github.com/izolight/dht"
 	"net/http"
 	_ "net/http/pprof"
 )
