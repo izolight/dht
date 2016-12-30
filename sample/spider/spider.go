@@ -4,6 +4,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"time"
 	"github.com/shiyanhui/dht"
 	"net/http"
 	_ "net/http/pprof"
@@ -25,6 +26,9 @@ func main() {
 	go func() {
 		http.ListenAndServe(":6060", nil)
 	}()
+
+	const start = '가'
+	const end = '힣'
 
 	w := dht.NewWire(65536, 1024, 256)
 	go func() {
@@ -59,9 +63,23 @@ func main() {
 				bt.Length = info["length"].(int)
 			}
 
-			data, err := json.Marshal(bt)
-			if err == nil {
-				fmt.Printf("%s\n\n", data)
+			name := bt.Name
+			for _, char := range name {
+//				if (char > 128 && char < start) {
+//					fmt.Printf("foreign torrent: %s\n", name)
+//					data, err := json.Marshal(bt)
+//					if err == nil {
+//						fmt.Printf("%s\n\n", data)
+//					}
+//					break
+				if (char >= start && char < end) {
+					fmt.Printf("%s: found korean torrent: %s\n", time.Now().Format(time.RFC3339), name)
+					data, err := json.Marshal(bt)
+					if err == nil {
+						fmt.Printf("%s\n\n", data)
+					}
+					break
+				}
 			}
 		}
 	}()
