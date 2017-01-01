@@ -106,7 +106,7 @@ func getRemoteIP() (ip string, err error) {
 		Timeout: time.Second * 30,
 	}
 
-	req, err := http.NewRequest("GET", "http://ifconfig.me", nil)
+	req, err := http.NewRequest("GET", "https://v4.ifconfig.co", nil)
 	if err != nil {
 		return
 	}

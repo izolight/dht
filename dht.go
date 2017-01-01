@@ -8,6 +8,7 @@ import (
 	"math"
 	"net"
 	"time"
+	"log"
 )
 
 const (
@@ -145,11 +146,13 @@ func New(config *Config) *DHT {
 	go func() {
 		for _, ip := range getLocalIPs() {
 			d.blackList.insert(ip, -1)
+			log.Printf("Got local IP: %vㄴㄴㄴㄴㅁ", ip)
 		}
 
 		ip, err := getRemoteIP()
 		if err != nil {
 			d.blackList.insert(ip, -1)
+			log.Printf("Got remote IP: %v", ip)
 		}
 	}()
 

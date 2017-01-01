@@ -29,10 +29,10 @@ func main() {
 
 	const start = '가'
 	const end = '힣'
-	logfile, _ := os.Create("./log.txt")
+	logfile, _ := os.OpenFile("./log.txt", os.O_RDWR|os.O_APPEND, 0660)
 	logger := log.New(logfile, "DHT Spider: ", log.LstdFlags|log.Lshortfile)
 
-	w := dht.NewWire(65536, 1024, 256)
+	w := dht.NewWire(65536, 4096, 2048)
 	go func() {
 		for resp := range w.Response() {
 			metadata, err := dht.Decode(resp.MetadataInfo)
@@ -66,6 +66,11 @@ func main() {
 			}
 
 			name := bt.Name
+					data, err := json.Marshal(bt)
+					if err == nil {
+						log.Printf("%s", data)
+						logger.Printf("%s", data)
+					}
 			for _, char := range name {
 //				if (char > 128 && char < start) {
 //					fmt.Printf("foreign torrent: %s\n", name)
