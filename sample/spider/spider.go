@@ -66,11 +66,6 @@ func main() {
 			}
 
 			name := bt.Name
-					data, err := json.Marshal(bt)
-					if err == nil {
-						log.Printf("%s", data)
-						logger.Printf("%s", data)
-					}
 			for _, char := range name {
 //				if (char > 128 && char < start) {
 //					fmt.Printf("foreign torrent: %s\n", name)
