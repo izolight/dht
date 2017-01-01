@@ -30,7 +30,7 @@ func main() {
 	const start = '가'
 	const end = '힣'
 	logfile, _ := os.Create("./log.txt")
-	logger := log.New(logfile, "test", log.LstdFlags|log.Lshortfile)
+	logger := log.New(logfile, "DHT Spider: ", log.LstdFlags|log.Lshortfile)
 
 	w := dht.NewWire(65536, 1024, 256)
 	go func() {
