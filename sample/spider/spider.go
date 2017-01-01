@@ -3,8 +3,7 @@ package main
 import (
 	"encoding/hex"
 	"encoding/json"
-	"fmt"
-	"time"
+	"os"
 	"log"
 	"github.com/izolight/dht"
 	"net/http"
@@ -30,6 +29,8 @@ func main() {
 
 	const start = '가'
 	const end = '힣'
+	logfile, _ := os.Create("./log.txt")
+	logger := log.New(logfile, "test", log.LstdFlags|log.Lshortfile)
 
 	w := dht.NewWire(65536, 1024, 256)
 	go func() {
@@ -74,11 +75,10 @@ func main() {
 //					}
 //					break
 				if (char >= start && char < end) {
-					fmt.Printf("%s: found korean torrent: %s\n", time.Now().Format(time.RFC3339), name)
 					data, err := json.Marshal(bt)
 					if err == nil {
-						fmt.Printf("%s\n\n", data)
 						log.Printf("%s", data)
+						logger.Printf("%s", data)
 					}
 					break
 				}
