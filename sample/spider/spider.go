@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+	"log"
 	"github.com/izolight/dht"
 	"net/http"
 	_ "net/http/pprof"
@@ -77,6 +78,7 @@ func main() {
 					data, err := json.Marshal(bt)
 					if err == nil {
 						fmt.Printf("%s\n\n", data)
+						log.Printf("%s", data)
 					}
 					break
 				}
