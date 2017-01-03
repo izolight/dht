@@ -69,7 +69,7 @@ func NewStandardConfig() *Config {
 		K:           8,
 		KBucketSize: 8,
 		Network:     "udp4",
-		Address:     ":6881",
+		Address:     ":26881",
 		PrimeNodes: []string{
 			"router.bittorrent.com:6881",
 			"router.utorrent.com:6881",
@@ -96,7 +96,7 @@ func NewCrawlConfig() *Config {
 	config := NewStandardConfig()
 	config.NodeExpriedAfter = 0
 	config.KBucketExpiredAfter = 0
-	config.CheckKBucketPeriod = time.Second * 5
+	config.CheckKBucketPeriod = time.Second * 1
 	config.KBucketSize = math.MaxInt32
 	config.Mode = CrawlMode
 	config.RefreshNodeNum = 256
@@ -146,7 +146,7 @@ func New(config *Config) *DHT {
 	go func() {
 		for _, ip := range getLocalIPs() {
 			d.blackList.insert(ip, -1)
-			log.Printf("Got local IP: %vㄴㄴㄴㄴㅁ", ip)
+			log.Printf("Got local IP: %v", ip)
 		}
 
 		ip, err := getRemoteIP()
@@ -186,6 +186,7 @@ func (dht *DHT) init() {
 	go dht.transactionManager.run()
 	go dht.tokenManager.clear()
 	go dht.blackList.clear()
+	log.Println("Initialized DHT variables.")
 }
 
 // join makes current node join the dht network.
@@ -202,6 +203,7 @@ func (dht *DHT) join() {
 			dht.node.id.RawString(),
 		)
 	}
+	log.Println("Joined DHT network.")
 }
 
 // listen receives message from udp.
